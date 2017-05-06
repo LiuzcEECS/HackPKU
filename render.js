@@ -10,8 +10,8 @@ var musicdir = "./src/sample.mp3";
 cursor.src = "./img/cursor.png";
 //bg.src = "./img/bg.jpg";
 var timesum, timenow, radius, timenext, datanow, tem;
+var beginx, beginy, endx, endy, centerx, centery;
 var beginRadius = 200.0;
-var defaultRadius = 10.0;
 
 var player = {
     x: defaultX,
@@ -33,38 +33,89 @@ var player = {
     }
 };
 
+function isPass(num){
+    timenext = beatmap.datalist[num][2] - timenow;
+    if(beatmap.datalist[beatmap.nextbeat].length == 3 && timenext < 0) return false;
+    if(beatmap.datalist[beatmap.nextbeat].length >= 5 && timenext < 0 - beatmap.datalist[beatmap.nextbeat][5]) return false;
+    return true;
+}
+
+function isEnd(num){
+    if(beatmap.datalist[num].length == 3 && beatmap.datalist[num][2] < timenow) return true;
+    if(beatmap.datalist[num][2] - timenow > 1000) return true;
+    return false;
+}
+
 beatmap.render = function(){
     timenow = audio.currentTime * 1000;	
     if(beatmap.nextbeat == beatmap.datalist.length) return;
     timenext = beatmap.datalist[beatmap.nextbeat][2] - timenow;
-    while(timenext < 0){
-	beatmap.nextbeat += 1;
-        timenext = beatmap.datalist[beatmap.nextbeat][2] - timenow;
+    while( (beatmap.nextbeat < beatmap.datalist.length) && !(isPass(beatmap.nextbeat)) ){
+	    beatmap.nextbeat += 1;
     }
     tem = beatmap.nextbeat;
-    while(tem < beatmap.datalist.length){
-        timenext = beatmap.datalist[tem][2] - timenow;
-        if(timenext <= 1000){
-	    radius = (beginRadius - defaultRadius) * timenext / 1000 + defaultRadius;
-	    ctx.beginPath();
-	    datanow = beatmap.datalist[tem];
-	    //console.log(datanow[0], datanow[1], radius);
-	    ctx.arc(datanow[0], datanow[1], radius, 0, 2*Math.PI);
-            ctx.stroke();
 
-	    if(datanow.length == 3){
-	        ctx.beginPath();
-	        ctx.arc(datanow[0], datanow[1], defaultRadius, 0, 2*Math.PI);
-	    }
-      	    else{
-	    
-	    }
-	    ctx.stroke();
+    while(tem < beatmap.datalist.length){
+        if(isEnd(tem)){
+            break;
         }
-	else{
-	    break;
-    	}
-	tem++;
+        if(isPass(tem)){
+            datanow = beatmap.datalist[tem];
+            if(datanow.length == 3){
+                radius = (beginRadius - defaultRadius) * timenext / 1000 + defaultRadius;
+                ctx.beginPath();
+                ctx.arc(datanow[0], datanow[1], radius, 0, 2*Math.PI);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.arc(datanow[0], datanow[1], defaultRadius, 0, 2*Math.PI);
+                ctx.stroke();
+            }
+            else{
+
+                datanow = beatmap.datalist[tem];
+
+                if(timenext >= 0){
+                    radius = (beginRadius - defaultRadius) * timenext / 1000 + defaultRadius;
+                    ctx.beginPath();
+                    ctx.arc(datanow[0], datanow[1], radius, 0, 2*Math.PI);
+                    ctx.stroke();
+
+                    ctx.beginPath();
+                    ctx.arc(datanow[0], datanow[1], defaultRadius, 0, 2*Math.PI);
+                    ctx.moveTo(datanow[6], datanow[7]);
+                    ctx.lineTo(datanow[8], datanow[9]);
+                    ctx.stroke();
+
+                    ctx.beginPath();
+                    ctx.arc(datanow[3], datanow[4], defaultRadius, 0, 2*Math.PI);
+                    ctx.stroke();
+                }
+                else{
+                    ctx.beginPath();
+                    centerx = datanow[0] + (datanow[3] - datanow[0]) * (0 - timenext)/ datanow[5];
+                    centery = datanow[1] + (datanow[4] - datanow[1]) * (0 - timenext)/ datanow[5];
+                    ctx.arc(centerx, centery, defaultRadius, 0, 2*Math.PI);
+                    ctx.stroke();
+
+                    beginx = datanow[6] - datanow[0] + centerx;
+                    beginy = datanow[7] - datanow[1] + centery;
+                    if(Math.abs(datanow[3] - beginx) >= Math.abs(datanow[3] - datanow[8]) && Math.abs(datanow[4] - beginy) >= Math.abs(datanow[4] - datanow[9]) ){
+                        ctx.beginPath();
+                        ctx.moveTo(beginx, beginy);
+                        ctx.lineTo(datanow[8], datanow[9]);
+                        ctx.stroke();
+                    }
+
+                    ctx.beginPath();
+                    ctx.arc(datanow[3], datanow[4], defaultRadius, 0, 2*Math.PI);
+                    ctx.stroke();
+
+                }
+            }
+        }
+
+        tem++;
     }
 
 }
