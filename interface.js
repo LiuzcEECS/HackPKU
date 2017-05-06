@@ -25,17 +25,7 @@ function setupController(callback) {
                 var oldHand = lastFrame.hand(frame.hands[hand].id);
                 var oldIsGrabbed = (oldHand.pinchStrength >= 0.3);
                 var currentIsGrabbed = (frame.hands[hand].pinchStrength >= 0.3);
-                if (oldHand.valid) {
-                    if (oldIsGrabbed && !currentIsGrabbed) {
-                        /* grabbed => not grabbed */
-                        onHandRelease(normalizedPosition[0], normalizedPosition[2]);
-                    }
-                    else if (!oldIsGrabbed && currentIsGrabbed) {
-                        /* not grabbed => grabbed */
-                        /* TODO: don't use hard coded */
-                        onHandGrasp(normalizedPosition[0], normalizedPosition[2]);
-                    }
-                }
+                onHandGrasp(normalizedPosition[0], normalizedPosition[2]);
                 /* append to hand list */
                 results.push(new Hand(normalizedPosition[0], normalizedPosition[1], normalizedPosition[2], frame.hands[hand].grabStrength));
             }
