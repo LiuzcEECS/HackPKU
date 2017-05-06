@@ -47,7 +47,7 @@ function isEnd(num){
 }
 
 beatmap.render = function(){
-    timenow = audio.currentTime * 1000;	
+    timenow = audio.currentTime * 1000;
     if(beatmap.nextbeat == beatmap.datalist.length) return;
     timenext = beatmap.datalist[beatmap.nextbeat][2] - timenow;
     while( (beatmap.nextbeat < beatmap.datalist.length) && !(isPass(beatmap.nextbeat)) ){
@@ -122,7 +122,7 @@ beatmap.render = function(){
 
 //Main function
 function renderGame(){
-    if(!isStart){	
+    if(!isStart){
         isStart = true;
         //bgctx.drawImage(bg,0,0);
     }
@@ -149,6 +149,7 @@ function mainLoop() {
 
 function start(){
     isStart = true;
+    resize();
     //bgctx.drawImage(bg,0,0);
     audio.src = musicdir;
     timesum = audio.duration;
