@@ -1,6 +1,4 @@
-var defaultX = 200;
-var defaultY = 200;
-var isStart = False;
+var isStart = false;
 var canvas = document.getElementById("game");
 var ctx = canvas.getContext("2d");
 //var bgcanvas = document.getElementById("bg");
@@ -20,26 +18,25 @@ var player = {
         this.y = gamepad.y;
         ctx.drawImage(cursor,this.x,this.y);
         //this.updatePosition();
-    };
+    }
 };
 
 function renderGame(){
     if(!isStart){	
-        isStart = True;
+        isStart = true;
         //bgctx.drawImage(bg,0,0);
     }
     player.render();
 
 }
 
-
 function start(){
-    isStart = True;
+    isStart = true;
     //bgctx.drawImage(bg,0,0);
     audio.src = musicdir;
     audio.start();
 }
 
 function end(){
-    isStart = False;
+    isStart = false;
 }
