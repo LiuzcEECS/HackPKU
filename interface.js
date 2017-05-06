@@ -1,9 +1,10 @@
 class Hand {
-    constructor(_x, _y, _z, _isGrabbed) {
+    constructor(_x, _y, _z, _s) {
+        /* x, y, z and grabbing strength */
         this.x = _x;
         this.y = _y;
         this.z = _z;
-        this.isGrabbed = _isGrabbed;
+        this.s = _s;
     }
 }
 
@@ -22,8 +23,8 @@ function setupController(callback) {
                 var normalizedPosition = interactionBox.normalizePoint(frame.hands[hand].palmPosition, true);
                 /* determine grab */
                 var oldHand = lastFrame.hand(frame.hands[hand].id);
-                var currentIsGrabbed = (frame.hands[hand].grabStrength >= 0.9);
-                var oldIsGrabbed = (oldHand.grabStrength >= 0.9);
+                var oldIsGrabbed = (oldHand.grabStrength >= 0.7);
+                var currentIsGrabbed = (frame.hands[hand].grabStrength >= 0.7);
                 if (oldHand.valid) {
                     if (oldIsGrabbed && !currentIsGrabbed) {
                         /* grabbed => not grabbed */
@@ -36,7 +37,7 @@ function setupController(callback) {
                     }
                 }
                 /* append to hand list */
-                results.push(new Hand(normalizedPosition[0], normalizedPosition[1], normalizedPosition[2], currentIsGrabbed));
+                results.push(new Hand(normalizedPosition[0], normalizedPosition[1], normalizedPosition[2], frame.hands[hand].grabStrength));
             }
             callback(results);
         }

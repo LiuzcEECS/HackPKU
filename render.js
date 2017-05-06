@@ -20,10 +20,12 @@ var player = {
         for (hand in this.handList) {
             ctx.beginPath();
             ctx.arc(this.handList[hand].x * canvas.width, this.handList[hand].z * canvas.height, 10, 0, 2*Math.PI);
-            if (this.handList[hand].isGrabbed) {
-                ctx.fillStyle = 'green';
-                ctx.fill();
+            otherDepth = Math.floor(255 * (1 - this.handList[hand].s)).toString(16);
+            if (otherDepth.length == 1) {
+                otherDepth = "0" + otherDepth;
             }
+            ctx.fillStyle = '#' + otherDepth + 'FF' + otherDepth;
+            ctx.fill();
             ctx.stroke();
         }
     }
@@ -47,7 +49,7 @@ beatmap.render = function(){
     if(beatmap.nextbeat == beatmap.datalist.length) return;
     timenext = beatmap.datalist[beatmap.nextbeat][2] - timenow;
     while( (beatmap.nextbeat < beatmap.datalist.length) && !(isPass(beatmap.nextbeat)) ){
-	    //beatmap.nextbeat += 1;
+        //beatmap.nextbeat += 1;
         beatMissed();
     }
     tem = beatmap.nextbeat;
