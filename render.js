@@ -30,44 +30,51 @@ var player = {
 };
 
 beatmap.render = function(){
-    timenow = audio.currentTime * 1000;	
+    timenow = audio.currentTime * 1000;
     if(beatmap.nextbeat == beatmap.datalist.length) return;
     timenext = beatmap.datalist[beatmap.nextbeat][2] - timenow;
-    while(timenext < 0){
-	beatmap.nextbeat += 1;
+    /*while(timenext < 0){
+	    beatmap.nextbeat += 1;
         timenext = beatmap.datalist[beatmap.nextbeat][2] - timenow;
-    }
+    }*/
     tem = beatmap.nextbeat;
     while(tem < beatmap.datalist.length){
         timenext = beatmap.datalist[tem][2] - timenow;
         if(timenext <= 1000){
-	    radius = (beginRadius - defaultRadius) * timenext / 1000 + defaultRadius;
-	    ctx.beginPath();
-	    datanow = beatmap.datalist[tem];
-	    //console.log(datanow[0], datanow[1], radius);
-	    ctx.arc(datanow[0], datanow[1], radius, 0, 2*Math.PI);
-            ctx.stroke();
+            if(timenext >=0){
+    	        radius = (beginRadius - defaultRadius) * timenext / 1000 + defaultRadius;
+    	        ctx.beginPath();
+    	        datanow = beatmap.datalist[tem];
+    	        //console.log(datanow[0], datanow[1], radius);
+    	        ctx.arc(datanow[0], datanow[1], radius, 0, 2*Math.PI);
+                ctx.stroke();
 
-	    if(datanow.length == 3){
-	        ctx.beginPath();
-	        ctx.arc(datanow[0], datanow[1], defaultRadius, 0, 2*Math.PI);
-	    }
-      	    else{
-	    
-	    }
-	    ctx.stroke();
+    	        if(datanow.length == 3){
+    	            ctx.beginPath();
+    	            ctx.arc(datanow[0], datanow[1], defaultRadius, 0, 2*Math.PI);
+    	        }
+          	    else{
+    	        }
+                ctx.stroke();
+            }
+            else{ // late
+                if(timenext<=-200){ // over 200 ms not clicked, missed this note
+                    // do sth here
+                    beatMissed();
+                }
+            }
+            tem++;
         }
-	else{
-	    break;
+	    else{
+	        break;
     	}
-	tem++;
     }
 
 }
 
 //Main function
 function renderGame(){
-    if(!isStart){	
+    if(!isStart){
         isStart = true;
         //bgctx.drawImage(bg,0,0);
     }
