@@ -1,3 +1,4 @@
+var judgeInterval=200;
 player.performance={
 	score:0,
 	combo:0,
@@ -32,7 +33,7 @@ function onHandRelease(x,y){
 function beatMissed(){
 	console.log("Missed");
 	player.performance.hp--;
-	beatmap.nextbeat += 1;
+	beatmap.nextbeat+=1;
 	player.performance.combo=0;
 }
 
