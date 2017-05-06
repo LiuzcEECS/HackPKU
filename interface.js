@@ -28,12 +28,12 @@ function setupController(callback) {
                 if (oldHand.valid) {
                     if (oldIsGrabbed && !currentIsGrabbed) {
                         /* grabbed => not grabbed */
-                        onHandRelease(normalizedPosition[0] * 500, normalizedPosition[2] * 500);
+                        onHandRelease(normalizedPosition[0], normalizedPosition[2]);
                     }
                     else if (!oldIsGrabbed && currentIsGrabbed) {
                         /* not grabbed => grabbed */
                         /* TODO: don't use hard coded */
-                        onHandGrasp(normalizedPosition[0] * 500, normalizedPosition[2] * 500);
+                        onHandGrasp(normalizedPosition[0], normalizedPosition[2]);
                     }
                 }
                 /* append to hand list */
