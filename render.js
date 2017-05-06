@@ -6,7 +6,7 @@ var ctx = canvas.getContext("2d");
 var cursor = new Image();
 //var bg = newImage();
 var audio = document.getElementById('audio');
-var musicdir = "./src/sample.mp3";
+var musicdir = "./audio/sample.mp3";
 cursor.src = "./img/cursor.png";
 //bg.src = "./img/bg.jpg";
 
