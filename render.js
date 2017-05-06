@@ -35,13 +35,13 @@ var player = {
 
 function isPass(num){
     timenext = beatmap.datalist[num][2] - timenow;
-    if(beatmap.datalist[beatmap.nextbeat].length == 3 && timenext < 0) return false;
+    if(beatmap.datalist[beatmap.nextbeat].length == 3 && timenext < -judgeInterval) return false;
     if(beatmap.datalist[beatmap.nextbeat].length >= 5 && timenext < 0 - beatmap.datalist[beatmap.nextbeat][5]) return false;
     return true;
 }
 
 function isEnd(num){
-    if(beatmap.datalist[num].length == 3 && beatmap.datalist[num][2] < timenow) return true;
+    if(beatmap.datalist[num].length == 3 && beatmap.datalist[num][2] - timenow <  -judgeInterval) return true;
     if(beatmap.datalist[num][2] - timenow > 1000) return true;
     return false;
 }
@@ -51,7 +51,8 @@ beatmap.render = function(){
     if(beatmap.nextbeat == beatmap.datalist.length) return;
     timenext = beatmap.datalist[beatmap.nextbeat][2] - timenow;
     while( (beatmap.nextbeat < beatmap.datalist.length) && !(isPass(beatmap.nextbeat)) ){
-	    beatmap.nextbeat += 1;
+	    //beatmap.nextbeat += 1;
+        beatMissed();
     }
     tem = beatmap.nextbeat;
 
@@ -62,10 +63,12 @@ beatmap.render = function(){
         if(isPass(tem)){
             datanow = beatmap.datalist[tem];
             if(datanow.length == 3){
-                radius = (beginRadius - defaultRadius) * timenext / 1000 + defaultRadius;
-                ctx.beginPath();
-                ctx.arc(datanow[0], datanow[1], radius, 0, 2*Math.PI);
-                ctx.stroke();
+                if(timenext > 0){
+                    radius = (beginRadius - defaultRadius) * timenext / 1000 + defaultRadius;
+                    ctx.beginPath();
+                    ctx.arc(datanow[0], datanow[1], radius, 0, 2*Math.PI);
+                    ctx.stroke();
+                }
 
                 ctx.beginPath();
                 ctx.arc(datanow[0], datanow[1], defaultRadius, 0, 2*Math.PI);
@@ -84,9 +87,9 @@ beatmap.render = function(){
                     ctx.beginPath();
                     ctx.arc(datanow[0], datanow[1], defaultRadius, 0, 2*Math.PI);
                     if( Math.abs(datanow[3] - datanow[6]) >= Math.abs(datanow[3] - datanow[8]) && Math.abs(datanow[4] - datanow[7]) >= Math.abs(datanow[4] - datanow[9]) ){
-                    ctx.moveTo(datanow[6], datanow[7]);
-                    ctx.lineTo(datanow[8], datanow[9]);
-                }
+                        ctx.moveTo(datanow[6], datanow[7]);
+                        ctx.lineTo(datanow[8], datanow[9]);
+                    }
                     ctx.stroke();
 
                     ctx.beginPath();
