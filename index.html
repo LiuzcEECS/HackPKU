@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
     <body onmousedown="onMouseDown(event)" onmouseup="onMouseUp(event)" onmousemove="onMouseMove(event)" style="margin:0;padding:0">
+
+        <div id="score">OSUSU!</div>
+        <div id="tit">TEST</div>
         <canvas id="game" width="500" height="500"></canvas>
         <audio id="audio" src="audio/sample.mp3"></audio>
         <script src="lib/jQuery.js"></script>
@@ -52,6 +55,22 @@ $(document).ready(function(){
 </script>
 <style>
 
+#score {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: auto;
+    margin-top: 15px;
+    margin-left: 25px;
+    font-family: helvetica;
+}
+
+#tit {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-family: helvetica;
+}
     .waves-effect{
         border-radius: 100%;
         background-color:#D8D8D8;

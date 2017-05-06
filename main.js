@@ -1,2 +1,4 @@
-setupController(gamepad.updatePosition);
-init();
+function startGame() {
+    setupController(gamepad.updatePosition);
+    init();
+}
