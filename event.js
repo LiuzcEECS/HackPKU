@@ -1,11 +1,32 @@
 
 var canvasW;
 var canvasH;
+var wavesDiv;
 
 //initialization
 function init(){
 	resize();
 	getBeatmap("Neru - Terror (luxoDeh) [Easy].osu");
+}
+
+function anime(x,y){
+	console.log("Animate called");
+	wavesDiv = $('.waves-effect');
+	wavesDiv[0].className = 'waves-effect';
+    var wH = 500;
+    var iX = x;
+    var iY = y;
+    var nX = iX - wH/2;
+    var nY = iY - wH/2;
+
+    $("body").offset();
+    wavesDiv
+	.css({
+        width: wH,
+        height: wH,
+        left: nX,
+        top: nY
+    }).addClass("waves-effect-animation");
 }
 
 function resize(){

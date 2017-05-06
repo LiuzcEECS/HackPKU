@@ -17,3 +17,79 @@
 </html>
 
 
+<html>
+<head>
+<meta charset="utf-8">
+<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+
+    $(".waves").mousedown(function(e) {
+
+        var box = $(this);
+        var w = $(".waves-effect");
+
+        //设置按钮样式为’waves-effect‘即去掉动画样式’waves-effect-animation‘
+        w[0].className = 'waves-effect';
+
+        //计算涟漪坐标（折算成左上角坐标而非中心点），涟漪大小（取外标签最长边）
+        var wH = 500;
+        box.offset().left;
+        var iX = e.pageX// - box.offset().left;
+        var iY = e.pageY// - box.offset().top;
+        var nX = iX - wH/2;
+        var nY = iY - wH/2;
+
+        //设置涟漪div样式，准备播放动画
+        w.css({
+            width: wH,
+            height: wH,
+            left: nX,
+            top: nY
+        }).addClass("waves-effect-animation");//播放动画
+    });
+});
+</script>
+<style>
+
+    .waves-effect{
+        border-radius: 100%;
+        background-color:#D8D8D8;
+        left: 20px;
+        top: 20px;
+        transform: scale(0);
+        width: 10px;
+        height: 10px;
+        position:absolute;
+    }
+
+    .waves-effect-animation{
+        animation: animation-definition 1s ease-out;  
+        /*兼容各大浏览器*/
+        -moz-animation: animation-definition 1s ease-out;  
+        -webkit-animation: animation-definition 1s ease-out;  
+        -o-animation: animation-definition 1s ease-out;  
+    }
+
+    @keyframes animation-definition {  
+        from{  
+            transform: scale(0.1);  
+            opacity: 1;
+        }  
+
+        to{  
+            transform: scale(2); /*因为涟漪的大小为标签的最长边，为了保证点击标签边缘时，涟漪也能覆盖整个标签，scale值最小应为2*/
+            opacity: 0;            
+        } 
+    }    
+</style>
+
+</head>
+<body>
+    <div class="waves" style="width: 1250px;height: 800px;">
+    	<canvas></canvas>
+    	<div class='waves-effect'></div>
+    </div>
+
+</body>
+</html>
