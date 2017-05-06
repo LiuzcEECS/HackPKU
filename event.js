@@ -1,7 +1,7 @@
 
 var canvasW;
 var canvasH;
-var wavesDiv = document.getElementById('waves-effect');
+var wavesDiv;
 
 //initialization
 function init(){
@@ -9,15 +9,19 @@ function init(){
 	getBeatmap("Alan Walker - Faded (Astarte) [Turtle's Standard].osu");
 }
 
-function anime(){
-	wavesDiv.className = 'waves-effect';
+function anime(x,y){
+	console.log("Animate called");
+	wavesDiv = $('.waves-effect');
+	wavesDiv[0].className = 'waves-effect';
     var wH = 500;
-    var iX = e.pageX - box.offset().left;
-    var iY = e.pageY - box.offset().top;
+    var iX = x;
+    var iY = y;
     var nX = iX - wH/2;
     var nY = iY - wH/2;
 
-    wavesDiv.css({
+    wavesDiv
+	.removeClass("waves-effect-animation")
+	.css({
         width: wH,
         height: wH,
         left: nX,
