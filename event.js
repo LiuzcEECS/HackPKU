@@ -5,7 +5,7 @@ var canvasH;
 //initialization
 function init(){
 	resize();
-	getBeatmap("Alan Walker - Faded (Astarte) [Turtle's Standard].osu");
+	getBeatmap("Neru - Terror (luxoDeh) [Easy].osu");
 }
 
 function resize(){

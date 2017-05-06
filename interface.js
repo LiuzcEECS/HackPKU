@@ -23,8 +23,8 @@ function setupController(callback) {
                 var normalizedPosition = interactionBox.normalizePoint(frame.hands[hand].palmPosition, true);
                 /* determine grab */
                 var oldHand = lastFrame.hand(frame.hands[hand].id);
-                var oldIsGrabbed = (oldHand.grabStrength >= 0.7);
-                var currentIsGrabbed = (frame.hands[hand].grabStrength >= 0.7);
+                var oldIsGrabbed = (oldHand.pinchStrength >= 0.3);
+                var currentIsGrabbed = (frame.hands[hand].pinchStrength >= 0.3);
                 if (oldHand.valid) {
                     if (oldIsGrabbed && !currentIsGrabbed) {
                         /* grabbed => not grabbed */
