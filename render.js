@@ -9,7 +9,7 @@ var audio = document.getElementById('audio');
 var musicdir = "./src/sample.mp3";
 cursor.src = "./img/cursor.png";
 //bg.src = "./img/bg.jpg";
-var timesum, timenow, radius, timenext, datanow;
+var timesum, timenow, radius, timenext, datanow, tem;
 var beginRadius = 200.0;
 var defaultRadius = 10.0;
 
@@ -37,11 +37,17 @@ beatmap.render = function(){
     timenow = audio.currentTime * 1000;	
     if(beatmap.nextbeat == beatmap.datalist.length) return;
     timenext = beatmap.datalist[beatmap.nextbeat][2] - timenow;
-    if(timenext >= 0){
+    while(timenext < 0){
+	beatmap.nextbeat += 1;
+        timenext = beatmap.datalist[beatmap.nextbeat][2] - timenow;
+    }
+    tem = beatmap.nextbeat;
+    while(tem < beatmap.datalist.length){
+        timenext = beatmap.datalist[tem][2] - timenow;
         if(timenext <= 1000){
 	    radius = (beginRadius - defaultRadius) * timenext / 1000 + defaultRadius;
 	    ctx.beginPath();
-	    datanow = beatmap.datalist[beatmap.nextbeat];
+	    datanow = beatmap.datalist[tem];
 	    //console.log(datanow[0], datanow[1], radius);
 	    ctx.arc(datanow[0], datanow[1], radius, 0, 2*Math.PI);
             ctx.stroke();
@@ -55,9 +61,10 @@ beatmap.render = function(){
 	    }
 	    ctx.stroke();
         }
-    }
-    else{
-        beatmap.nextbeat += 1;
+	else{
+	    break;
+    	}
+	tem++;
     }
 
 }
