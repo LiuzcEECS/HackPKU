@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-    <body>
+    <body onmousedown="onMouseDown(event)" onmouseup="onMouseUp(event)">
         <canvas id="game" width="500" height="500"></canvas>
         <audio id="audio" src="audio/sample.mp3"></audio>
         <script src="jQuery.js"></script>
@@ -11,6 +11,7 @@
         <script src="beatmap.js"></script>
         <script src="render.js"></script>
         <script src="event.js"></script>
+        <script src="judgement.js"></script>
         <script src="main.js"></script>
     </body>
 </html>
