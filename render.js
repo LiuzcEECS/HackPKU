@@ -22,7 +22,7 @@ var player = {
 };
 
 function renderGame(){
-    if(!isStart){	
+    if(!isStart){
         isStart = true;
         //bgctx.drawImage(bg,0,0);
     }
@@ -30,11 +30,29 @@ function renderGame(){
 
 }
 
+var fps=60;
+var now;
+var then=Date.now();
+var interval=1000/fps;
+var delta;
+
+function mainLoop() {
+　　requestAnimationFrame(mainLoop);
+　　now=Date.now();
+　　delta=now-then;
+　　if(delta>interval){
+　　　　then=now-(delta%interval);
+　　　　renderGame();
+　　}
+}
+
 function start(){
     isStart = true;
     //bgctx.drawImage(bg,0,0);
     audio.src = musicdir;
     audio.start();
+
+    mainLoop();
 }
 
 function end(){
