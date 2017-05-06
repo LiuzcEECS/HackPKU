@@ -40,7 +40,7 @@ function onHandGrasp(x_,y_){
 	var sqrDist=(x-datanow[0])*(x-datanow[0])+(y-datanow[1])*(y-datanow[1]);
 	if(sqrDist>defaultRadius*defaultRadius)return; // out of boundary
 
-	anime(x,y);
+	anime(datanow[0], datanow[1]);
 	if(datanow.length==3) // is a single hit
 		beatHit(); // already hit
 }
@@ -81,7 +81,7 @@ function judgeSlide(time,prX,prY){
 	//console.log(prX,prY,playerX,playerY);
 
 	if(time>datanow[6]){ // no error to the end
-		anime(player.x,player.y);
+		anime(datanow[4], datanow[5]);
 		beatHit();
 	}
 	else{ // still sliding
