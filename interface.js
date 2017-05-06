@@ -15,19 +15,28 @@ function setupController(callback) {
             /* there is hand in current frame */
             var interactionBox = frame.interactionBox;
             var results = [];
+            var lastFrame = controller.frame(1);
             /* iterate all hands in current frame */
             for (hand in frame.hands) {
                 /* normalize palm position */
                 var normalizedPosition = interactionBox.normalizePoint(frame.hands[hand].palmPosition, true);
-                /* determine grabbed or not */
-                var isGrabbed = (frame.hands[hand].grabStrength >= 1.0);
-                if (isGrabbed) {
-                    /* if grabbed, notify judgement */
-                    /* TODO: don't use hard coded */
-                    onHandGrasp(normalizedPosition[0] * 500, normalizedPosition[2] * 500);
+                /* determine grab */
+                var oldHand = lastFrame.hand(frame.hands[hand].id);
+                var currentIsGrabbed = (frame.hands[hand].grabStrength >= 0.9);
+                var oldIsGrabbed = (oldHand.grabStrength >= 0.9);
+                if (oldHand.valid) {
+                    if (oldIsGrabbed && !currentIsGrabbed) {
+                        /* grabbed => not grabbed */
+                        onHandRelease(normalizedPosition[0] * 500, normalizedPosition[2] * 500);
+                    }
+                    else if (!oldIsGrabbed && currentIsGrabbed) {
+                        /* not grabbed => grabbed */
+                        /* TODO: don't use hard coded */
+                        onHandGrasp(normalizedPosition[0] * 500, normalizedPosition[2] * 500);
+                    }
                 }
                 /* append to hand list */
-                results.push(new Hand(normalizedPosition[0], normalizedPosition[1], normalizedPosition[2], isGrabbed));
+                results.push(new Hand(normalizedPosition[0], normalizedPosition[1], normalizedPosition[2], currentIsGrabbed));
             }
             callback(results);
         }
