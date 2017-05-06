@@ -1,0 +1,32 @@
+
+.waves-effect{
+    border-radius: 100%;
+    background-color:#50A0BE;
+    left: 20px;
+    top: 20px;
+    transform: scale(0);
+    width: 10px;
+    height: 10px;
+    position:absolute;
+}
+
+.waves-effect-animation{
+    animation: animation-definition 1s ease-out;  
+
+    -moz-animation: animation-definition 1s ease-out;  
+    -webkit-animation: animation-definition 1s ease-out;  
+    -o-animation: animation-definition 1s ease-out;  
+}
+
+@keyframes animation-definition {  
+    from{  
+        transform: scale(0.1);  
+        opacity: 0.4;
+    }  
+
+    to{  
+        transform: scale(1.5);
+        opacity: 0;            
+    } 
+}    
+
