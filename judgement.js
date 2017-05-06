@@ -7,13 +7,33 @@ player.performance={
 	hp:10
 };
 
-function onHandGrasp(x,y){
+function onHandGrasp(x_,y_){
+
+	
+	x=x_*canvasW;
+	y=y_*canvasW;
+
+	/*if(player.handList.length==0)return;
+
+	var playerX=player.handList[0].x*canvasW;
+	var playerY=player.handList[0].z*canvasW;
+
+	//console.log(x,y,playerX,playerY);
+
+	ctx.strokeStyle="#ff0000";
+    ctx.beginPath();
+    ctx.arc(playerX, playerY, 10, 0, 2*Math.PI);
+    ctx.stroke();
+    ctx.strokeStyle="#000000";*/
+
 	var timenow=audio.currentTime*1000;
 	if(beatmap.nextbeat==beatmap.datalist.length)return;
 	var datanow=beatmap.datalist[beatmap.nextbeat];
 	var deltaT=datanow[2]-timenow;
 
-	console.log("deltaT="+deltaT);
+	//console.log(x,y,datanow[0],datanow[1]);
+
+	//console.log("deltaT="+deltaT);
 	if(deltaT>=judgeInterval)return; // not considered as clicking this yet
 	if(deltaT<=-judgeInterval)return; // handled by render timer
 
@@ -45,14 +65,25 @@ function beatHit(){
 }
 
 function judgeSlide(time,prX,prY){
+
 	var datanow=beatmap.datalist[beatmap.nextbeat];
 	if(datanow.length==3)return;
+
+	if(player.handList.length==0){
+		beatMissed();
+		return;
+	}
+
+	var playerX=player.handList[0].x*canvasW;
+	var playerY=player.handList[0].z*canvasW;
+
+	//console.log(prX,prY,playerX,playerY);
 
 	if(time>datanow[6]){ // no error to the end
 		beatHit();
 	}
 	else{ // still sliding
-		var sqrDist=(prX-player.x)*(prX-player.x)+(prY-player.y)*(prY-player.y);
+		var sqrDist=(prX-playerX)*(prX-playerX)+(prY-playerY)*(prY-playerY);
 		if(sqrDist<=judgeSlideRadius*judgeSlideRadius){ // in safe range
 			return; // continue;
 		}
@@ -65,12 +96,12 @@ function judgeSlide(time,prX,prY){
 //================================= Caller =============================
 function onMouseDown(event){
 	player.grabbed=true;
-	onHandGrasp(event.clientX,event.clientY);
+	onHandGrasp(event.clientX/canvasW,event.clientY/canvasH);
 }
 
 function onMouseUp(event){
 	player.grabbed=false;
-	onHandRelease(event.clientX,event.clientY);
+	onHandRelease(event.clientX/canvasW,event.clientY/canvasH);
 }
 
 function onMouseMove(event){

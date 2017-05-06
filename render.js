@@ -19,7 +19,7 @@ var player = {
         /* draw each hand */
         for (hand in this.handList) {
             ctx.beginPath();
-            ctx.arc(this.handList[hand].x * canvas.width, this.handList[hand].z * canvas.height, 10, 0, 2*Math.PI);
+            ctx.arc(this.handList[hand].x * canvasW, this.handList[hand].z * canvasW, 10, 0, 2*Math.PI);
             otherDepth = Math.floor(255 * (1 - this.handList[hand].s)).toString(16);
             if (otherDepth.length == 1) {
                 otherDepth = "0" + otherDepth;

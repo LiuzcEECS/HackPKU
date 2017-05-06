@@ -43,20 +43,28 @@ function parseStandardOsuMap(osuData){
 		}
 	}
 
+	var ratioW=canvasW/beatmap.width;
+	var ratioH=canvasH/beatmap.height;
+	var isWidthFit=ratioW<ratioH;
+	var ratioB=isWidthFit?ratioW:ratioH;
+
 	for(var i=startPos+1;i<mapInfo.length;i++){
 		var hitItem=mapInfo[i];
 		if(hitItem.length==0)break;
 
 		//console.log(hitItem);
 		var itemParams=hitItem.split(",");
-		var startParams=stringArrayToIntArray(itemParams.slice(0,3));
+		var startParams=[
+		parseInt(itemParams[0])*ratioB,
+		parseInt(itemParams[1])*ratioB,
+		parseInt(itemParams[2])];
 
 		if(itemParams.length>7){ // slide
 			// get ending point
 			var coords=itemParams[5].split("|");
 			var lastCoordStr=coords[coords.length-1].split(":");
-			var lastCoordX=parseInt(lastCoordStr[0]);
-			var lastCoordY=parseInt(lastCoordStr[1]);
+			var lastCoordX=parseInt(lastCoordStr[0])*ratioB;
+			var lastCoordY=parseInt(lastCoordStr[1])*ratioB;
 
 			// get duration
 			var slideLength=parseFloat(itemParams[7]);
