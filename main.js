@@ -1,2 +1,2 @@
 setupController(gamepad.updatePosition);
-start();
+init();

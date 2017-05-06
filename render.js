@@ -6,13 +6,16 @@ var audio = document.getElementById('audio');
 var musicdir = "./audio/sample.mp3";
 cursor.src = "./img/cursor.png";
 
+//bg.src = "./img/bg.jpg";
+var timesum, timenow, radius, timenext, datanow, tem;
+var beginRadius = 200.0;
+var defaultRadius = 10.0;
+
 var player = {
     handList: [],
     render: function() {
         /* fetch new hand list */
         this.handList = gamepad.handList;
-        /* clear canvas */
-        canvas.width = canvas.width;
         /* draw each hand */
         for (hand in this.handList) {
             ctx.beginPath();
@@ -26,11 +29,50 @@ var player = {
     }
 };
 
+beatmap.render = function(){
+    timenow = audio.currentTime * 1000;	
+    if(beatmap.nextbeat == beatmap.datalist.length) return;
+    timenext = beatmap.datalist[beatmap.nextbeat][2] - timenow;
+    while(timenext < 0){
+	beatmap.nextbeat += 1;
+        timenext = beatmap.datalist[beatmap.nextbeat][2] - timenow;
+    }
+    tem = beatmap.nextbeat;
+    while(tem < beatmap.datalist.length){
+        timenext = beatmap.datalist[tem][2] - timenow;
+        if(timenext <= 1000){
+	    radius = (beginRadius - defaultRadius) * timenext / 1000 + defaultRadius;
+	    ctx.beginPath();
+	    datanow = beatmap.datalist[tem];
+	    //console.log(datanow[0], datanow[1], radius);
+	    ctx.arc(datanow[0], datanow[1], radius, 0, 2*Math.PI);
+            ctx.stroke();
+
+	    if(datanow.length == 3){
+	        ctx.beginPath();
+	        ctx.arc(datanow[0], datanow[1], defaultRadius, 0, 2*Math.PI);
+	    }
+      	    else{
+	    
+	    }
+	    ctx.stroke();
+        }
+	else{
+	    break;
+    	}
+	tem++;
+    }
+
+}
+
+//Main function
 function renderGame(){
     if(!isStart){	
         isStart = true;
         //bgctx.drawImage(bg,0,0);
     }
+    canvas.width = canvas.width;
+    beatmap.render();
     player.render();
 
 }
@@ -54,6 +96,7 @@ function start(){
     isStart = true;
     //bgctx.drawImage(bg,0,0);
     audio.src = musicdir;
+    timesum = audio.duration;
     audio.play();
     mainLoop();
 }
