@@ -1,32 +1,28 @@
 var isStart = false;
 var canvas = document.getElementById("game");
 var ctx = canvas.getContext("2d");
-//var bgcanvas = document.getElementById("bg");
-//var bgctx = canvas.getContext("2d");
 var cursor = new Image();
-//var bg = newImage();
 var audio = document.getElementById('audio');
 var musicdir = "./audio/sample.mp3";
 cursor.src = "./img/cursor.png";
-//bg.src = "./img/bg.jpg";
 
 var player = {
-    x: defaultX,
-    y: defaultY,
+    handList: [],
     render: function() {
-        this.x = gamepad.x;
-        this.y = gamepad.y;
-        this.grabbed = gamepad.grabbed;
+        /* fetch new hand list */
+        this.handList = gamepad.handList;
+        /* clear canvas */
         canvas.width = canvas.width;
-        ctx.beginPath();
-        ctx.arc(this.x + 200, this.y + 200, 10, 0, 2*Math.PI);
-        if (this.grabbed) {
-            ctx.fillStyle = 'green';
-            ctx.fill();
+        /* draw each hand */
+        for (hand in this.handList) {
+            ctx.beginPath();
+            ctx.arc(this.handList[hand].x * canvas.width, this.handList[hand].z * canvas.height, 10, 0, 2*Math.PI);
+            if (this.handList[hand].isGrabbed) {
+                ctx.fillStyle = 'green';
+                ctx.fill();
+            }
+            ctx.stroke();
         }
-        ctx.stroke();
-        //ctx.drawImage(cursor, this.x, this.y);
-        //this.updatePosition();
     }
 };
 

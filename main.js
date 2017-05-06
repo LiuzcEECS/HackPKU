@@ -1,0 +1,2 @@
+setupController(gamepad.updatePosition);
+start();
