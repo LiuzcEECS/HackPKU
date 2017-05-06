@@ -12,7 +12,8 @@
 Leap.loop({
     hand: function(hand){
         currentPosition = hand.palmPosition;
-        gamepad.updatePosition(currentPosition[0], currentPosition[2]);
+        isGrabbed = (hand.grabStrength === 1.0);
+        gamepad.updatePosition(currentPosition[0], currentPosition[2], isGrabbed);
     }
 });
 start();
