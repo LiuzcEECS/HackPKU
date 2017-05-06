@@ -105,6 +105,7 @@ function mainLoop() {
 
 function start(){
     isStart = true;
+    resize();
     //bgctx.drawImage(bg,0,0);
     audio.src = musicdir;
     timesum = audio.duration;

@@ -12,9 +12,17 @@ function stringArrayToIntArray(stringArray){
 	return intArray;
 }
 
+function parseStandardOsuMap(osuData){
+
+}
+
 function parseBeatmap(data,status){
 	console.log(status);
 	if(data){
+
+		console.log(parseStandardOsuMap(data));
+		return;
+
 		beatmap.datalist=new Array();
 		var beats=data.split("\n");
 		for(var i=0;i<beats.length;i++){
@@ -35,6 +43,6 @@ function parseBeatmap(data,status){
 			}
 		}
 		console.log(beatmap);
-		start();
+		//start();
 	}
 }
