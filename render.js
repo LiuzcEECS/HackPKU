@@ -47,7 +47,7 @@ function isEnd(num){
 }
 
 beatmap.render = function(){
-    timenow = audio.currentTime * 1000;	
+    timenow = audio.currentTime * 1000;
     if(beatmap.nextbeat == beatmap.datalist.length) return;
     timenext = beatmap.datalist[beatmap.nextbeat][2] - timenow;
     while( (beatmap.nextbeat < beatmap.datalist.length) && !(isPass(beatmap.nextbeat)) ){
@@ -83,8 +83,10 @@ beatmap.render = function(){
 
                     ctx.beginPath();
                     ctx.arc(datanow[0], datanow[1], defaultRadius, 0, 2*Math.PI);
+                    if( Math.abs(datanow[3] - datanow[6]) >= Math.abs(datanow[3] - datanow[8]) && Math.abs(datanow[4] - datanow[7]) >= Math.abs(datanow[4] - datanow[9]) ){
                     ctx.moveTo(datanow[6], datanow[7]);
                     ctx.lineTo(datanow[8], datanow[9]);
+                }
                     ctx.stroke();
 
                     ctx.beginPath();
@@ -100,7 +102,7 @@ beatmap.render = function(){
 
                     beginx = datanow[6] - datanow[0] + centerx;
                     beginy = datanow[7] - datanow[1] + centery;
-                    if(Math.abs(datanow[3] - beginx) >= Math.abs(datanow[3] - datanow[8]) && Math.abs(datanow[4] - beginy) >= Math.abs(datanow[4] - datanow[9]) ){
+                    if( Math.abs(datanow[3] - beginx) >= Math.abs(datanow[3] - datanow[8]) && Math.abs(datanow[4] - beginy) >= Math.abs(datanow[4] - datanow[9]) ){
                         ctx.beginPath();
                         ctx.moveTo(beginx, beginy);
                         ctx.lineTo(datanow[8], datanow[9]);
@@ -122,7 +124,7 @@ beatmap.render = function(){
 
 //Main function
 function renderGame(){
-    if(!isStart){	
+    if(!isStart){
         isStart = true;
         //bgctx.drawImage(bg,0,0);
     }
@@ -149,6 +151,7 @@ function mainLoop() {
 
 function start(){
     isStart = true;
+    resize();
     //bgctx.drawImage(bg,0,0);
     audio.src = musicdir;
     timesum = audio.duration;
