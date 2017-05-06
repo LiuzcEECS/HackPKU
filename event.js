@@ -5,7 +5,7 @@ var canvasH;
 //initialization
 function init(){
 	resize();
-	getBeatmap("Faded_test.mosu");
+	getBeatmap("Alan Walker - Faded (Astarte) [Turtle's Standard].osu");
 }
 
 function resize(){
@@ -19,7 +19,7 @@ function resize(){
 function getBeatmap(filename){
 	console.log("ask for "+filename);
 	$.get(
-		"https://raw.githubusercontent.com/LiuzcEECS/HackPKU/master/src/"+filename,
+		"https://raw.githubusercontent.com/LiuzcEECS/HackPKU/render/src/"+filename,
 		parseBeatmap
 	);
 }
