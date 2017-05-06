@@ -9,6 +9,9 @@ var audio = document.getElementById('audio');
 var musicdir = "./src/sample.mp3";
 cursor.src = "./img/cursor.png";
 //bg.src = "./img/bg.jpg";
+var timesum, timenow, radius, timenext, datanow;
+var beginRadius = 100.0;
+var defaultRadius = 50.0;
 
 var player = {
     x: defaultX,
@@ -17,7 +20,6 @@ var player = {
         this.x = gamepad.x;
         this.y = gamepad.y;
         console.log("called", this.x, this.y);
-        canvas.width = canvas.width;
         ctx.beginPath();
         ctx.arc(this.x + 200, this.y + 200, 10, 0, 2*Math.PI);
         ctx.stroke();
@@ -26,11 +28,33 @@ var player = {
     }
 };
 
+beatmap.render = function(){
+    timenow = audio.currentTime * 1000;	
+    if(beatmap.nextbeat == beatmap.length) return;
+    timenext = beatmap.datalist[beatmap.nextbeat][2] - timenow;
+    if(timenext <= 1000){
+    	radius = (beginRadius - defaultRadius) * timenext / 1000;
+	ctx.beginPath();
+	datanow = beatmap.datalist[beatmap.nextbeat];
+        ctx.arc(datanow[0] - radius, datanow[1] - radius, 2 * radius, 0, 2*Math.PI);
+        if(datanow.length == 3){
+            ctx.arc(datanow[0] - defaultRadius, datanow[1] - defaultRadius, 2 * defaultRadius, 0, 2*Math.PI);
+	}
+        else{
+	    
+	}
+	ctx.stroke();
+    }
+}
+
+//Main function
 function renderGame(){
     if(!isStart){	
         isStart = true;
         //bgctx.drawImage(bg,0,0);
     }
+    canvas.width = canvas.width;
+    beatmap.render();
     player.render();
 
 }
@@ -54,6 +78,7 @@ function start(){
     isStart = true;
     //bgctx.drawImage(bg,0,0);
     audio.src = musicdir;
+    timesum = audio.duration;
     audio.play();
     mainLoop();
 }
