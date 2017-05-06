@@ -59,6 +59,10 @@ beatmap.render = function(){
             break;
         }
         if(isPass(tem)){
+            ctx.font = "30px Ariel";
+            ctx.fillText(player.performance.hp.toString(10), 120, 40);
+            ctx.font = "30px Ariel";
+            ctx.fillText(player.performance.combo.toString(10), 120, 75);
             datanow = beatmap.datalist[tem];
             if(datanow.length == 3){
                 if(timenext > 0){
