@@ -20,7 +20,12 @@ function setupController(callback) {
                 /* normalize palm position */
                 var normalizedPosition = interactionBox.normalizePoint(frame.hands[hand].palmPosition, true);
                 /* determine grabbed or not */
-                var isGrabbed = (frame.hands[hand].grabStrength === 1.0);
+                var isGrabbed = (frame.hands[hand].grabStrength >= 1.0);
+                if (isGrabbed) {
+                    /* if grabbed, notify judgement */
+                    /* TODO: don't use hard coded */
+                    onHandGrasp(normalizedPosition[0] * 500, normalizedPosition[2] * 500);
+                }
                 /* append to hand list */
                 results.push(new Hand(normalizedPosition[0], normalizedPosition[1], normalizedPosition[2], isGrabbed));
             }

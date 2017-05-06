@@ -9,7 +9,7 @@ cursor.src = "./img/cursor.png";
 //bg.src = "./img/bg.jpg";
 var timesum, timenow, radius, timenext, datanow, tem;
 var beginRadius = 200.0;
-var defaultRadius = 10.0;
+var defaultRadius = 40.0;
 
 var player = {
     handList: [],
