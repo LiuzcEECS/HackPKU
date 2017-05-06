@@ -3,7 +3,7 @@ var canvas = document.getElementById("game");
 var ctx = canvas.getContext("2d");
 //var bgcanvas = document.getElementById("bg");
 //var bgctx = canvas.getContext("2d");
-var cursor = newImage();
+var cursor = new Image();
 //var bg = newImage();
 var audio = document.getElementById('audio');
 var musicdir = "./src/sample.mp3";
@@ -34,7 +34,7 @@ function start(){
     isStart = true;
     //bgctx.drawImage(bg,0,0);
     audio.src = musicdir;
-    audio.start();
+    audio.play();
 }
 
 function end(){
