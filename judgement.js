@@ -51,7 +51,6 @@ function onHandRelease(x,y){
 
 function beatMissed(){
 	console.log("Missed");
-	player.performance.hp--;
 	beatmap.nextbeat+=1;
 	player.performance.combo=0;
 }
@@ -60,6 +59,7 @@ function beatHit(){
 	console.log("Hit");
 	console.log("HP="+player.performance.hp+" Combo="+player.performance.combo);
 	beatmap.nextbeat+=1;
+	player.performance.hp++;
 	player.performance.combo++;
 	if(player.performance.maxCombo<player.performance.combo)
 		player.performance.maxCombo=player.performance.combo;
