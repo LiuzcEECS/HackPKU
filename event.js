@@ -19,8 +19,8 @@ function anime(x,y){
     var nX = iX - wH/2;
     var nY = iY - wH/2;
 
+    $("body").offset();
     wavesDiv
-	.removeClass("waves-effect-animation")
 	.css({
         width: wH,
         height: wH,
