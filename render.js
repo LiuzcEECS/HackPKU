@@ -168,13 +168,13 @@ var interval=1000/fps;
 var delta;
 
 function mainLoop() {
-　　requestAnimationFrame(mainLoop);
-　　now=Date.now();
-　　delta=now-then;
-　　if(delta>interval){
-　　　　then=now-(delta%interval);
-　　　　renderGame();
-　　}
+    requestAnimationFrame(mainLoop);
+    now=Date.now();
+    delta=now-then;
+    if(delta>interval){
+        then=now-(delta%interval);
+        renderGame();
+    }
 }
 
 function start(){
