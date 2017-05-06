@@ -20,8 +20,14 @@ var player = {
         this.x = gamepad.x;
         this.y = gamepad.y;
         console.log("called", this.x, this.y);
+        this.grabbed = gamepad.grabbed;
+        canvas.width = canvas.width;
         ctx.beginPath();
         ctx.arc(this.x + 200, this.y + 200, 10, 0, 2*Math.PI);
+        if (this.grabbed) {
+            ctx.fillStyle = 'green';
+            ctx.fill();
+        }
         ctx.stroke();
         //ctx.drawImage(cursor, this.x, this.y);
         //this.updatePosition();

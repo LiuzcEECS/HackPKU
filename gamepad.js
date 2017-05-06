@@ -13,11 +13,12 @@ window.addEventListener("GamepadConnected", gamepadconnected);
 window.addEventListener("GamepadGrasp", gamepadgrasp);
 window.addEventListener("GamepadRelease", gamepadrelease);
 var gamepad = {
-    isGrab: false,
     x: defaultX,
     y: defaultY,
-    updatePosition: function(_x,_y){
+    grabbed: false,
+    updatePosition: function(_x, _y, _grabbed){
         this.x = _x;
         this.y = _y;
+        this.grabbed = _grabbed;
     }
 }
