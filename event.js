@@ -14,6 +14,7 @@ function resize(){
 	$("#game").attr({"width":canvasW,"height":canvasH});
 	beginRadius = canvasW/6;
 	defaultRadius = canvasW/30;
+	judgeSlideRadius = defaultRadius*2;
 }
 
 function getBeatmap(filename){
