@@ -7,7 +7,7 @@ var cursor = new Image();
 //var bg = newImage();
 var audio = document.getElementById('audio');
 var musicdir = "./src/sample.mp3";
-cursor.src = "./img/cursor.svg";
+cursor.src = "./img/cursor.png";
 //bg.src = "./img/bg.jpg";
 
 var player = {
@@ -16,7 +16,12 @@ var player = {
     render: function() {
         this.x = gamepad.x;
         this.y = gamepad.y;
-        ctx.drawImage(cursor,this.x,this.y);
+        console.log("called", this.x, this.y);
+        canvas.width = canvas.width;
+        ctx.beginPath();
+        ctx.arc(this.x + 200, this.y + 200, 10, 0, 2*Math.PI);
+        ctx.stroke();
+        //ctx.drawImage(cursor, this.x, this.y);
         //this.updatePosition();
     }
 };
@@ -36,21 +41,20 @@ var interval=1000/fps;
 var delta;
 
 function mainLoop() {
-　　requestAnimationFrame(mainLoop);
-　　now=Date.now();
-　　delta=now-then;
-　　if(delta>interval){
-　　　　then=now-(delta%interval);
-　　　　renderGame();
-　　}
+    requestAnimationFrame(mainLoop);
+    now=Date.now();
+    delta=now-then;
+    if(delta>interval){
+        then=now-(delta%interval);
+        renderGame();
+    }
 }
 
 function start(){
     isStart = true;
     //bgctx.drawImage(bg,0,0);
     audio.src = musicdir;
-    audio.start();
-
+    audio.play();
     mainLoop();
 }
 

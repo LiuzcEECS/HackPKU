@@ -17,8 +17,7 @@ var gamepad = {
     x: defaultX,
     y: defaultY,
     updatePosition: function(_x,_y){
-        x = _x;
-        y = _y;
-        console.log(x, y);
+        this.x = _x;
+        this.y = _y;
     }
 }
