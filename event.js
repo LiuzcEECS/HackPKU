@@ -4,9 +4,9 @@ var canvasH;
 var wavesDiv;
 
 //initialization
-function init(){
+function init(filename){
 	resize();
-	getBeatmap("seleP - Scarlet Rose -feat.Lily- (smallboat) [Lily Rose].osu");
+	getBeatmap(filename);
 }
 
 function anime(x,y,t){
@@ -43,7 +43,7 @@ function resize(){
 function getBeatmap(filename){
 	console.log("ask for "+filename);
 	$.get(
-		"https://raw.githubusercontent.com/LiuzcEECS/HackPKU/render/src/"+filename,
+		"https://raw.githubusercontent.com/LiuzcEECS/HackPKU/StartPage/src/"+filename,
 		parseBeatmap
 	);
 }

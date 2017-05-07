@@ -4,12 +4,12 @@ player.performance={
 	score:0,
 	combo:0,
 	maxCombo:0,
-	hp:10
+	hp:0
 };
 
 function onHandGrasp(x_,y_){
 
-	
+
 	x=x_*canvasW;
 	y=y_*canvasW;
 

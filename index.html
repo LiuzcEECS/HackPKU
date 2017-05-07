@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html>
-    <body onmousedown="onMouseDown(event)" onmouseup="onMouseUp(event)" onmousemove="onMouseMove(event)" style="margin:0;padding:0">
-        <input type="button" class="button" id="startButton" value="Start" onClick="startGame()"/>
+    <head>
+        <link rel="stylesheet" type="text/css" href="assets/style.css"/>
+    </head>
+    <body class="background" onload="startwithBG('src/defaultBG.jpg')" style="margin:0;padding:0">
+        <!--<input type="button" class="button" id="startButton" value="Start" onClick="startGame()"/>
+        -->
         <div id="score" style="display:none;">SCORE: 0</div>
-        <div id="combo" style="display:none;">COMBO: 0</div>     
+        <div id="combo" style="display:none;">COMBO: 0</div>
         <canvas id="game" width="500" height="500"></canvas>
-        <audio id="audio" src="audio/sample.mp3"></audio>
+        <audio id="audio"></audio>
+
         <script src="lib/jQuery.js"></script>
         <script src="lib/leap-0.6.4.js"></script>
         <script src="lib/leap-plugins-0.1.12.js"></script>
@@ -16,6 +21,41 @@
         <script src="event.js"></script>
         <script src="judgement.js"></script>
         <script src="main.js"></script>
+
+        <div id="title">
+			<h1 onmouseover="ShowInfo('A Leap Motion OSU! Game')" onmouseout="CloseInfo()">
+				<span class="titlebr">{</span>Motionosu<span class="titlebr">}</span>
+			</h1>
+		</div>
+
+		<div id="infop">
+			<p class="info" id="info"></p>
+		</div>
+
+		<div id="link">
+			<p class="link1">
+
+				<a href="javascript:void(0)" style="text-decoration:none"
+					onclick="startGame(1)"
+					onmouseover="ShowInfo('Faded(Alan Walker)&nbsp;<sup>1.51</sup>')"
+					onmouseout="CloseInfo()">
+					Level 01</a><br/>
+
+                <a href="javascript:void(0)" style="text-decoration:none"
+					onclick="startGame(2)"
+					onmouseover="ShowInfo('Terror(Neru)&nbsp;<sup>1.97</sup>')"
+					onmouseout="CloseInfo()">
+					Level 02</a><br/>
+
+                <a href="javascript:void(0)" style="text-decoration:none"
+					onclick="startGame(3)"
+					onmouseover="ShowInfo('Taketori Hishou&nbsp;<sup>5.04</sup>')"
+					onmouseout="CloseInfo()">
+					Level 03</a><br/>
+
+			</p>
+		</div>
+
     </body>
 </html>
 
@@ -72,11 +112,11 @@
     }
 
     .waves-effect-animation{
-        animation: animation-definition 1s ease-out;  
+        animation: animation-definition 1s ease-out;
         /*兼容各大浏览器*/
-        -moz-animation: animation-definition 1s ease-out;  
-        -webkit-animation: animation-definition 1s ease-out;  
-        -o-animation: animation-definition 1s ease-out;  
+        -moz-animation: animation-definition 1s ease-out;
+        -webkit-animation: animation-definition 1s ease-out;
+        -o-animation: animation-definition 1s ease-out;
     }
 
     @keyframes animation-definition {  

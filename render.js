@@ -196,22 +196,10 @@ var interval=1000/fps;
 var delta;
 
 function mainLoop() {
-    requestAnimationFrame(mainLoop);
-    now=Date.now();
-    delta=now-then;
-    if(delta>interval){
-        then=now-(delta%interval);
-        renderGame();
+    if(audio.ended){
+        showWelcomePage(player.performance.hp,player.performance.maxCombo);
+        return;
     }
-}
-
-var fps=60;
-var now;
-var then=Date.now();
-var interval=1000/fps;
-var delta;
-
-function mainLoop() {
     requestAnimationFrame(mainLoop);
     now=Date.now();
     delta=now-then;
@@ -234,4 +222,3 @@ function start(){
 function end(){
     isStart = false;
 }
-
