@@ -10,11 +10,17 @@ cursor.src = "./img/cursor.png";
 var timesum, timenow, radius, timenext, datanow, tem, lastOtherDepth;
 var beginx, beginy, endx, endy, centerx, centery;
 var queue, waveq = [];
+var suoquanColor = "#808080";
+var pandingColor = "#50A0BE";
+var fillColor = "#A7DEF2";
+var strokeColor = "#000000";
+var waveColor = fillColor;
 var beginRadius;// = 200.0;
 
 var player = {
     handList: [],
     render: function() {
+        ctx.strokeStyle = strokeColor;
         /* fetch new hand list */
         this.handList = gamepad.handList;
         /* draw each hand */
@@ -25,11 +31,8 @@ var player = {
             if (otherDepth.length == 1) {
                 otherDepth = "0" + otherDepth;
             }
-            if(otherDepth != lastOtherDepth){
-                lastOtherDepth = otherDepth;
-                ctx.fillStyle = '#' + otherDepth + 'FF' + otherDepth;
-            }
-            ctx.fill();
+            //ctx.fillStyle = '#' + otherDepth + 'FF' + otherDepth;
+            //ctx.fill();
             ctx.stroke();
         }
     }
@@ -69,74 +72,8 @@ beatmap.render = function(){
 
         tem++;
     }
-    while(queue.length){
-        tem = queue.pop();
-        datanow = beatmap.datalist[tem];
-        timenext = beatmap.datalist[tem][2] - timenow;
-        if(datanow.length == 3){
-            if(timenext > 0){
-                radius = (beginRadius - defaultRadius) * timenext / 1000 + defaultRadius;
-                ctx.beginPath();
-                ctx.arc(datanow[0], datanow[1], radius, 0, 2*Math.PI);
-                ctx.stroke();
-            }
 
-            ctx.beginPath();
-            ctx.arc(datanow[0], datanow[1], defaultRadius, 0, 2*Math.PI);
-            ctx.stroke();
-        }
-        else{
-            if(timenext >= 0){ // sliding not started yet
-                radius = (beginRadius - defaultRadius) * timenext / 1000 + defaultRadius;
-                ctx.beginPath();
-                ctx.arc(datanow[0], datanow[1], radius, 0, 2*Math.PI);
-                ctx.stroke();
-
-                ctx.beginPath();
-                ctx.arc(datanow[0], datanow[1], defaultRadius, 0, 2*Math.PI);
-
-                if( Math.abs(datanow[3] - datanow[6]) > Math.abs(datanow[3] - datanow[8]) + 1 || Math.abs(datanow[4] - datanow[7]) > Math.abs(datanow[4] - datanow[9]) + 1 ){
-                    ctx.moveTo(datanow[6], datanow[7]);
-                    ctx.lineTo(datanow[8], datanow[9]);
-                }
-                ctx.stroke();
-
-                ctx.beginPath();
-                ctx.arc(datanow[3], datanow[4], defaultRadius, 0, 2*Math.PI);
-                ctx.stroke();
-            }
-            else{ // be sliding
-                ctx.beginPath();
-                centerx = datanow[0] + (datanow[3] - datanow[0]) * (0 - timenext)/ datanow[5];
-                centery = datanow[1] + (datanow[4] - datanow[1]) * (0 - timenext)/ datanow[5];
-                ctx.arc(centerx, centery, defaultRadius, 0, 2*Math.PI);
-                ctx.stroke();
-
-                ctx.strokeStyle="#c0c000";
-                ctx.beginPath();
-                ctx.arc(centerx, centery, judgeSlideRadius, 0, 2*Math.PI);
-                ctx.stroke();
-                ctx.strokeStyle="#000000";
-
-                beginx = datanow[6] - datanow[0] + centerx;
-                beginy = datanow[7] - datanow[1] + centery;
-                if(timenext > 0 - datanow[5]){
-                    if( Math.abs(datanow[3] - beginx) > Math.abs(datanow[3] - datanow[8]) + 1 || Math.abs(datanow[4] - beginy) > Math.abs(datanow[4] - datanow[9]) + 1 ){
-                        ctx.beginPath();
-                        ctx.moveTo(beginx, beginy);
-                        ctx.lineTo(datanow[8], datanow[9]);
-                        ctx.stroke();
-                    }
-                }
-                ctx.beginPath();
-                ctx.arc(datanow[3], datanow[4], defaultRadius, 0, 2*Math.PI);
-                ctx.stroke();
-                judgeSlide(-timenext,centerx,centery);
-
-            }
-
-        }
-    }
+    ctx.strokeStyle = waveColor;
     for(var i = waveq.length - 1 ; i >= 0; i--){
         if(timenow - waveq[i][2] > 700){
             waveq.pop();
@@ -148,6 +85,95 @@ beatmap.render = function(){
             ctx.stroke();
         }
     }
+
+    ctx.lineWidth = 10;
+    for(var i = queue.length - 1; i >= 0 ; i--){
+        tem = queue[i];
+        datanow = beatmap.datalist[tem];
+        timenext = beatmap.datalist[tem][2] - timenow;
+        if(datanow.length == 3){
+            ctx.strokeStyle = "#000000";
+            ctx.beginPath();
+            ctx.arc(datanow[0], datanow[1], defaultRadius, 0, 2*Math.PI);
+            ctx.stroke();
+            //ctx.fill();
+
+            if(timenext > 0){
+                radius = (beginRadius - defaultRadius) * timenext / 1000 + defaultRadius;
+                ctx.strokeStyle = suoquanColor;
+                ctx.beginPath();
+                ctx.arc(datanow[0], datanow[1], radius, 0, 2*Math.PI);
+                ctx.stroke();
+            }
+
+        }
+        else{
+            if(timenext >= 0){ // sliding not started yet
+                ctx.strokeStyle = "#000000";
+                ctx.beginPath();
+                ctx.arc(datanow[3], datanow[4], defaultRadius, 0, 2*Math.PI);
+                ctx.stroke();
+                //ctx.fill();
+
+                if( Math.abs(datanow[3] - datanow[6]) > Math.abs(datanow[3] - datanow[8]) + 1 || Math.abs(datanow[4] - datanow[7]) > Math.abs(datanow[4] - datanow[9]) + 1 ){
+                    ctx.beginPath();
+                    ctx.moveTo(datanow[6], datanow[7]);
+                    ctx.lineTo(datanow[8], datanow[9]);
+                    ctx.stroke();
+                }
+
+                ctx.strokeStyle=pandingColor;
+                ctx.beginPath();
+                ctx.arc(datanow[0], datanow[1], defaultRadius, 0, 2*Math.PI);
+                ctx.stroke();
+                //ctx.fill();
+
+                radius = (beginRadius - defaultRadius) * timenext / 1000 + defaultRadius;
+                ctx.strokeStyle = suoquanColor;
+                ctx.beginPath();
+                ctx.arc(datanow[0], datanow[1], radius, 0, 2*Math.PI);
+                ctx.stroke();
+
+            }
+            else{ // be sliding
+
+
+                ctx.strokeStyle="#000000";
+                centerx = datanow[0] + (datanow[3] - datanow[0]) * (0 - timenext)/ datanow[5];
+                centery = datanow[1] + (datanow[4] - datanow[1]) * (0 - timenext)/ datanow[5];
+
+                ctx.beginPath();
+                ctx.arc(datanow[3], datanow[4], defaultRadius, 0, 2*Math.PI);
+                ctx.stroke();
+                //ctx.fill();
+
+                beginx = datanow[6] - datanow[0] + centerx;
+                beginy = datanow[7] - datanow[1] + centery;
+                if(timenext > 0 - datanow[5]){
+                    if( Math.abs(datanow[3] - beginx) > Math.abs(datanow[3] - datanow[8]) + 1 || Math.abs(datanow[4] - beginy) > Math.abs(datanow[4] - datanow[9]) + 1 ){
+                        ctx.beginPath();
+                        ctx.moveTo(beginx, beginy);
+                        ctx.lineTo(datanow[8], datanow[9]);
+                        ctx.stroke();
+                    }
+                }
+
+                ctx.strokeStyle=pandingColor;
+                ctx.beginPath();
+                ctx.arc(centerx, centery, defaultRadius, 0, 2*Math.PI);
+                ctx.stroke();
+                //ctx.fill();
+
+                ctx.beginPath();
+                ctx.arc(centerx, centery, judgeSlideRadius, 0, 2*Math.PI);
+                ctx.stroke();
+
+                judgeSlide(-timenext,centerx,centery);
+
+            }
+
+        }
+    }
 }
 
 //Main function
@@ -157,6 +183,8 @@ function renderGame(){
         //bgctx.drawImage(bg,0,0);
     }
     canvas.width = canvas.width;
+    ctx.fillStyle = fillColor;
+    ctx.lineWidth = 3;
     beatmap.render();
     player.render();
 
