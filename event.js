@@ -4,14 +4,15 @@ var canvasH;
 var wavesDiv;
 
 //initialization
-function init(){
+function init(filename){
 	resize();
-	getBeatmap("seleP - Scarlet Rose -feat.Lily- (smallboat) [Lily Rose].osu");
+	getBeatmap(filename);
 }
 
 function anime(x,y,t){
-	console.log("Animate called");
+	//console.log("Animate called");
     waveq.push([x,y,t]);
+    /*
 	wavesDiv = $('.waves-effect');
 	wavesDiv[0].className = 'waves-effect';
     var wH = 500;
@@ -28,6 +29,7 @@ function anime(x,y,t){
         left: nX,
         top: nY
     }).addClass("waves-effect-animation");
+    */
 }
 
 function resize(){
@@ -35,15 +37,15 @@ function resize(){
 	canvasH=document.documentElement.clientHeight;
 	$("#game").attr({"width":canvasW,"height":canvasH});
 	$("#wave").attr({"width":canvasW,"height":canvasH});
-	beginRadius = canvasW/5;
-	defaultRadius = canvasW/15;
+	beginRadius = canvasW/6;
+	defaultRadius = canvasW/22;
 	judgeSlideRadius = defaultRadius*2.5;
 }
 
 function getBeatmap(filename){
 	console.log("ask for "+filename);
 	$.get(
-		"https://raw.githubusercontent.com/LiuzcEECS/HackPKU/render/src/"+filename,
+		"https://raw.githubusercontent.com/LiuzcEECS/HackPKU/StartPage/src/"+filename,
 		parseBeatmap
 	);
 }

@@ -15,6 +15,7 @@ var pandingColor = "#50A0BE";
 var fillColor = "#A7DEF2";
 var strokeColor = "#000000";
 var waveColor = fillColor;
+var outTime = 500;
 var beginRadius;// = 200.0;
 
 var player = {
@@ -75,17 +76,21 @@ beatmap.render = function(){
 
     ctx.strokeStyle = waveColor;
     for(var i = waveq.length - 1 ; i >= 0; i--){
-        if(timenow - waveq[i][2] > 700){
+        if(timenow - waveq[i][2] > outTime){
             waveq.pop();
         }
         else{
-            radius = 250 * (timenow - waveq[i][2]) / 700;
+            ctx.globalAlpha = (outTime - timenow + waveq[i][2]) / outTime;
+            radius = 250 * (1 - ctx.globalAlpha);
             ctx.beginPath();
             ctx.arc(waveq[i][0], waveq[i][1], radius, 0, 2*Math.PI);
             ctx.stroke();
+            ctx.fill();
         }
     }
 
+    ctx.globalAlpha = 1.0;
+    ctx.fillStyle = fillColor;
     ctx.lineWidth = 10;
     for(var i = queue.length - 1; i >= 0 ; i--){
         tem = queue[i];
@@ -183,7 +188,7 @@ function renderGame(){
         //bgctx.drawImage(bg,0,0);
     }
     canvas.width = canvas.width;
-    ctx.fillStyle = fillColor;
+    ctx.fillStyle = waveColor;
     ctx.lineWidth = 3;
     beatmap.render();
     player.render();
@@ -196,22 +201,10 @@ var interval=1000/fps;
 var delta;
 
 function mainLoop() {
-    requestAnimationFrame(mainLoop);
-    now=Date.now();
-    delta=now-then;
-    if(delta>interval){
-        then=now-(delta%interval);
-        renderGame();
+    if(audio.ended){
+        showWelcomePage(player.performance.hp,player.performance.maxCombo);
+        return;
     }
-}
-
-var fps=60;
-var now;
-var then=Date.now();
-var interval=1000/fps;
-var delta;
-
-function mainLoop() {
     requestAnimationFrame(mainLoop);
     now=Date.now();
     delta=now-then;
@@ -234,4 +227,3 @@ function start(){
 function end(){
     isStart = false;
 }
-
