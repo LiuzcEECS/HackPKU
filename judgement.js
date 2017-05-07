@@ -9,7 +9,7 @@ player.performance={
 
 function onHandGrasp(x_,y_){
 
-	
+
 	x=x_*canvasW;
 	y=y_*canvasW;
 

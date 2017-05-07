@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html>
-    <body onmousedown="onMouseDown(event)" onmouseup="onMouseUp(event)" onmousemove="onMouseMove(event)" style="margin:0;padding:0">
-        <input type="button" class="button" id="startButton" value="Start" onClick="startGame()"/>
+    <head>
+        <link rel="stylesheet" type="text/css" href="assets/style.css"/>
+    </head>
+    <body class="background" onload="startwithBG('src/defaultBG.jpg')" style="margin:0;padding:0">
+        <!--<input type="button" class="button" id="startButton" value="Start" onClick="startGame()"/>
+        -->
         <div id="score" style="display:none;">SCORE: 0</div>
-        <div id="combo" style="display:none;">COMBO: 0</div>     
+        <div id="combo" style="display:none;">COMBO: 0</div>
         <canvas id="game" width="500" height="500"></canvas>
         <audio id="audio" src="audio/sample.mp3"></audio>
+
         <script src="lib/jQuery.js"></script>
         <script src="lib/leap-0.6.4.js"></script>
         <script src="lib/leap-plugins-0.1.12.js"></script>
@@ -16,6 +21,47 @@
         <script src="event.js"></script>
         <script src="judgement.js"></script>
         <script src="main.js"></script>
+
+        <div id="title">
+			<h1 onmouseover="ShowInfo('A Leap Motion OSU! Game')" onmouseout="CloseInfo()">
+				<span class="titlebr">{</span>Motionosu<span class="titlebr">}</span>
+			</h1>
+		</div>
+
+		<div id="infop">
+			<p class="info" id="info"></p>
+		</div>
+
+		<div id="link">
+			<p class="link1">
+
+				<a href="javascript:void(0)" style="text-decoration:none"
+					onclick="startGame(1)"
+					onmouseover="ShowInfo('Map 01')"
+					onmouseout="CloseInfo()">
+					Map 01</a><br/>
+
+                <a href="javascript:void(0)" style="text-decoration:none"
+					onclick="startGame(2)"
+					onmouseover="ShowInfo('Map 02')"
+					onmouseout="CloseInfo()">
+					Map 02</a><br/>
+
+                <a href="javascript:void(0)" style="text-decoration:none"
+					onclick="startGame(3)"
+					onmouseover="ShowInfo('Map 03')"
+					onmouseout="CloseInfo()">
+					Map 03</a><br/>
+
+                <a href="javascript:void(0)" style="text-decoration:none"
+					onclick="startGame(4)"
+					onmouseover="ShowInfo('Map 04')"
+					onmouseout="CloseInfo()">
+					Map 04</a><br/>
+
+			</p>
+		</div>
+
     </body>
 </html>
 
@@ -101,24 +147,24 @@ $(document).ready(function(){
     }
 
     .waves-effect-animation{
-        animation: animation-definition 1s ease-out;  
+        animation: animation-definition 1s ease-out;
         /*兼容各大浏览器*/
-        -moz-animation: animation-definition 1s ease-out;  
-        -webkit-animation: animation-definition 1s ease-out;  
-        -o-animation: animation-definition 1s ease-out;  
+        -moz-animation: animation-definition 1s ease-out;
+        -webkit-animation: animation-definition 1s ease-out;
+        -o-animation: animation-definition 1s ease-out;
     }
 
-    @keyframes animation-definition {  
-        from{  
-            transform: scale(0.1);  
+    @keyframes animation-definition {
+        from{
+            transform: scale(0.1);
             opacity: 1;
-        }  
+        }
 
-        to{  
+        to{
             transform: scale(2); /*因为涟漪的大小为标签的最长边，为了保证点击标签边缘时，涟漪也能覆盖整个标签，scale值最小应为2*/
-            opacity: 0;            
-        } 
-    }    
+            opacity: 0;
+        }
+    }
 </style>
 
 </head>
