@@ -9,8 +9,9 @@ function init(){
 	getBeatmap("seleP - Scarlet Rose -feat.Lily- (smallboat) [Lily Rose].osu");
 }
 
-function anime(x,y){
+function anime(x,y,t){
 	console.log("Animate called");
+    waveq.push([x,y,t]);
 	wavesDiv = $('.waves-effect');
 	wavesDiv[0].className = 'waves-effect';
     var wH = 500;

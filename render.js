@@ -7,9 +7,9 @@ var musicdir = "./audio/sample.mp3";
 cursor.src = "./img/cursor.png";
 
 //bg.src = "./img/bg.jpg";
-var timesum, timenow, radius, timenext, datanow, tem;
+var timesum, timenow, radius, timenext, datanow, tem, lastOtherDepth;
 var beginx, beginy, endx, endy, centerx, centery;
-var queue;
+var queue, waveq = [];
 var beginRadius;// = 200.0;
 
 var player = {
@@ -25,7 +25,10 @@ var player = {
             if (otherDepth.length == 1) {
                 otherDepth = "0" + otherDepth;
             }
-            ctx.fillStyle = '#' + otherDepth + 'FF' + otherDepth;
+            if(otherDepth != lastOtherDepth){
+                lastOtherDepth = otherDepth;
+                ctx.fillStyle = '#' + otherDepth + 'FF' + otherDepth;
+            }
             ctx.fill();
             ctx.stroke();
         }
@@ -132,6 +135,17 @@ beatmap.render = function(){
 
             }
 
+        }
+    }
+    for(var i = waveq.length - 1 ; i >= 0; i--){
+        if(timenow - waveq[i][2] > 700){
+            waveq.pop();
+        }
+        else{
+            radius = 250 * (timenow - waveq[i][2]) / 700;
+            ctx.beginPath();
+            ctx.arc(waveq[i][0], waveq[i][1], radius, 0, 2*Math.PI);
+            ctx.stroke();
         }
     }
 }
