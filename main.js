@@ -1,4 +1,5 @@
 function startGame(mapID) {
+    console.log(mapID);
     $("#score").fadeIn(1000);
     $("#combo").fadeIn(1000);
     $("#title").fadeOut(1000);
@@ -11,12 +12,16 @@ function startGame(mapID) {
     setupController(gamepad.updatePosition);
     switch(mapID){
         case 1:
-            document.getElementById("myAudio").src="396077 Alan Walker - Faded/Faded - Alan Walker_ Iselin Solheim [MP3 128kbps].mp3";
-            init();
+            musicdir="src/01/Faded - Alan Walker_ Iselin Solheim [MP3 128kbps].mp3";
+            init("01/Alan Walker - Faded (Astarte) [Turtle's Standard].osu");
             break;
         case 2:
+            musicdir="src/02/Neru - Terror (D. Mindbreak) mp3.mp3";
+            init("02/Neru - Terror (luxoDeh) [Milan-'s Normal].osu");
             break;
         case 3:
+            musicdir="src/03/Taketori Hishou.mp3";
+            init("03/Dark PHOENiX - Taketori Hishou (KanbeKotori) [Extra].osu");
             break;
     }
 }
