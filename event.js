@@ -6,7 +6,7 @@ var wavesDiv;
 //initialization
 function init(){
 	resize();
-	getBeatmap("Neru - Terror (luxoDeh) [Easy].osu");
+	getBeatmap("seleP - Scarlet Rose -feat.Lily- (smallboat) [Lily Rose].osu");
 }
 
 function anime(x,y){
@@ -33,6 +33,7 @@ function resize(){
 	canvasW=document.documentElement.clientWidth;
 	canvasH=document.documentElement.clientHeight;
 	$("#game").attr({"width":canvasW,"height":canvasH});
+	$("#wave").attr({"width":canvasW,"height":canvasH});
 	beginRadius = canvasW/6;
 	defaultRadius = canvasW/30;
 	judgeSlideRadius = defaultRadius*2;

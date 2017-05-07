@@ -9,6 +9,7 @@ cursor.src = "./img/cursor.png";
 //bg.src = "./img/bg.jpg";
 var timesum, timenow, radius, timenext, datanow, tem;
 var beginx, beginy, endx, endy, centerx, centery;
+var queue;
 var beginRadius;// = 200.0;
 
 var player = {
@@ -54,84 +55,85 @@ beatmap.render = function(){
     }
 
     tem = beatmap.nextbeat;
+    queue = [];
     while(tem < beatmap.datalist.length){
         if(isEnd(tem)){
             break;
         }
         if(isPass(tem)){
-            datanow = beatmap.datalist[tem];
-            if(datanow.length == 3){
-                if(timenext > 0){
-                    radius = (beginRadius - defaultRadius) * timenext / 1000 + defaultRadius;
-                    ctx.beginPath();
-                    ctx.arc(datanow[0], datanow[1], radius, 0, 2*Math.PI);
-                    ctx.stroke();
-                }
-
-                ctx.beginPath();
-                ctx.arc(datanow[0], datanow[1], defaultRadius, 0, 2*Math.PI);
-                ctx.stroke();
-            }
-            else{
-
-                datanow = beatmap.datalist[tem];
-
-                if(timenext >= 0){ // sliding not started yet
-                    radius = (beginRadius - defaultRadius) * timenext / 1000 + defaultRadius;
-                    ctx.beginPath();
-                    ctx.arc(datanow[0], datanow[1], radius, 0, 2*Math.PI);
-                    ctx.stroke();
-
-                    ctx.beginPath();
-                    ctx.arc(datanow[0], datanow[1], defaultRadius, 0, 2*Math.PI);
-
-                    if( Math.abs(datanow[3] - datanow[6]) > Math.abs(datanow[3] - datanow[8]) + 1 || Math.abs(datanow[4] - datanow[7]) > Math.abs(datanow[4] - datanow[9]) + 1 ){
-                        ctx.moveTo(datanow[6], datanow[7]);
-                        ctx.lineTo(datanow[8], datanow[9]);
-                    }
-                    ctx.stroke();
-
-                    ctx.beginPath();
-                    ctx.arc(datanow[3], datanow[4], defaultRadius, 0, 2*Math.PI);
-                    ctx.stroke();
-                }
-                else{ // be sliding
-                    ctx.beginPath();
-                    centerx = datanow[0] + (datanow[3] - datanow[0]) * (0 - timenext)/ datanow[5];
-                    centery = datanow[1] + (datanow[4] - datanow[1]) * (0 - timenext)/ datanow[5];
-                    ctx.arc(centerx, centery, defaultRadius, 0, 2*Math.PI);
-                    ctx.stroke();
-
-                    ctx.strokeStyle="#c0c000";
-                    ctx.beginPath();
-                    ctx.arc(centerx, centery, judgeSlideRadius, 0, 2*Math.PI);
-                    ctx.stroke();
-                    ctx.strokeStyle="#000000";
-
-                    beginx = datanow[6] - datanow[0] + centerx;
-                    beginy = datanow[7] - datanow[1] + centery;
-                    if(timenext > 0 - datanow[5]){
-                        if( Math.abs(datanow[3] - beginx) > Math.abs(datanow[3] - datanow[8]) + 1 || Math.abs(datanow[4] - beginy) > Math.abs(datanow[4] - datanow[9]) + 1 ){
-                            ctx.beginPath();
-                            ctx.moveTo(beginx, beginy);
-                            ctx.lineTo(datanow[8], datanow[9]);
-                            ctx.stroke();
-                        }
-                    }
-                    ctx.beginPath();
-                    ctx.arc(datanow[3], datanow[4], defaultRadius, 0, 2*Math.PI);
-                    ctx.stroke();
-
-
-                    judgeSlide(-timenext,centerx,centery);
-
-                }
-            }
+            queue.push(tem);
         }
 
         tem++;
     }
+    while(queue.length){
+        tem = queue.pop();
+        datanow = beatmap.datalist[tem];
+        timenext = beatmap.datalist[tem][2] - timenow;
+        if(datanow.length == 3){
+            if(timenext > 0){
+                radius = (beginRadius - defaultRadius) * timenext / 1000 + defaultRadius;
+                ctx.beginPath();
+                ctx.arc(datanow[0], datanow[1], radius, 0, 2*Math.PI);
+                ctx.stroke();
+            }
 
+            ctx.beginPath();
+            ctx.arc(datanow[0], datanow[1], defaultRadius, 0, 2*Math.PI);
+            ctx.stroke();
+        }
+        else{
+            if(timenext >= 0){ // sliding not started yet
+                radius = (beginRadius - defaultRadius) * timenext / 1000 + defaultRadius;
+                ctx.beginPath();
+                ctx.arc(datanow[0], datanow[1], radius, 0, 2*Math.PI);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.arc(datanow[0], datanow[1], defaultRadius, 0, 2*Math.PI);
+
+                if( Math.abs(datanow[3] - datanow[6]) > Math.abs(datanow[3] - datanow[8]) + 1 || Math.abs(datanow[4] - datanow[7]) > Math.abs(datanow[4] - datanow[9]) + 1 ){
+                    ctx.moveTo(datanow[6], datanow[7]);
+                    ctx.lineTo(datanow[8], datanow[9]);
+                }
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.arc(datanow[3], datanow[4], defaultRadius, 0, 2*Math.PI);
+                ctx.stroke();
+            }
+            else{ // be sliding
+                ctx.beginPath();
+                centerx = datanow[0] + (datanow[3] - datanow[0]) * (0 - timenext)/ datanow[5];
+                centery = datanow[1] + (datanow[4] - datanow[1]) * (0 - timenext)/ datanow[5];
+                ctx.arc(centerx, centery, defaultRadius, 0, 2*Math.PI);
+                ctx.stroke();
+
+                ctx.strokeStyle="#c0c000";
+                ctx.beginPath();
+                ctx.arc(centerx, centery, judgeSlideRadius, 0, 2*Math.PI);
+                ctx.stroke();
+                ctx.strokeStyle="#000000";
+
+                beginx = datanow[6] - datanow[0] + centerx;
+                beginy = datanow[7] - datanow[1] + centery;
+                if(timenext > 0 - datanow[5]){
+                    if( Math.abs(datanow[3] - beginx) > Math.abs(datanow[3] - datanow[8]) + 1 || Math.abs(datanow[4] - beginy) > Math.abs(datanow[4] - datanow[9]) + 1 ){
+                        ctx.beginPath();
+                        ctx.moveTo(beginx, beginy);
+                        ctx.lineTo(datanow[8], datanow[9]);
+                        ctx.stroke();
+                    }
+                }
+                ctx.beginPath();
+                ctx.arc(datanow[3], datanow[4], defaultRadius, 0, 2*Math.PI);
+                ctx.stroke();
+                judgeSlide(-timenext,centerx,centery);
+
+            }
+
+        }
+    }
 }
 
 //Main function
@@ -190,3 +192,4 @@ function start(){
 function end(){
     isStart = false;
 }
+
