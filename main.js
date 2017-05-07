@@ -57,3 +57,13 @@ function startwithBG(imgsrc){
 	$("body").append(cover);
 	$(cover).fadeOut(1000);
 }
+
+function showWelcomePage(score,combo){
+    $("#score").fadeOut(1000);
+    $("#combo").fadeOut(1000);
+    $("#title").fadeIn(1000);
+    $("#infop").fadeIn(1000);
+    $("#link").fadeIn(1000);
+    startwithBG('src/defaultBG.jpg');
+    ShowInfo("Score:&nbsp;"+score+"<br/>MaxCombo:&nbsp;"+combo);
+}
