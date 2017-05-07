@@ -41,7 +41,7 @@ function onHandGrasp(x_,y_){
 	if(sqrDist>defaultRadius*defaultRadius)return; // out of boundary
 
 	anime(datanow[0], datanow[1], timenow);
-	if(datanow.length==3) // is a single hit
+	//if(datanow.length==3) // is a single hit
 		beatHit(); // already hit
 }
 
@@ -49,14 +49,17 @@ function onHandRelease(x,y){
 
 }
 
+var scoreElement = document.getElementById("score");
+var comboElement = document.getElementById("combo");
+
 function beatMissed(){
 	console.log("Missed");
 	beatmap.nextbeat+=1;
 	player.performance.combo=0;
+    comboText = "COMBO: " + player.performance.combo.toString(10);
+    comboElement.innerHTML = comboText;
 }
 
-var scoreElement = document.getElementById("score");
-var comboElement = document.getElementById("combo");
 
 function beatHit(){
 	console.log("Hit");
