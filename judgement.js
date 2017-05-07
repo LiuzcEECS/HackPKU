@@ -49,14 +49,17 @@ function onHandRelease(x,y){
 
 }
 
+var scoreElement = document.getElementById("score");
+var comboElement = document.getElementById("combo");
+
 function beatMissed(){
 	console.log("Missed");
 	beatmap.nextbeat+=1;
 	player.performance.combo=0;
+    comboText = "COMBO: " + player.performance.combo.toString(10);
+    comboElement.innerHTML = comboText;
 }
 
-var scoreElement = document.getElementById("score");
-var comboElement = document.getElementById("combo");
 
 function beatHit(){
 	console.log("Hit");
