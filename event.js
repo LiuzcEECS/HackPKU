@@ -33,6 +33,7 @@ function resize(){
 	canvasW=document.documentElement.clientWidth;
 	canvasH=document.documentElement.clientHeight;
 	$("#game").attr({"width":canvasW,"height":canvasH});
+	$("#wave").attr({"width":canvasW,"height":canvasH});
 	beginRadius = canvasW/6;
 	defaultRadius = canvasW/30;
 	judgeSlideRadius = defaultRadius*2;
