@@ -55,6 +55,9 @@ function beatMissed(){
 	player.performance.combo=0;
 }
 
+var scoreElement = document.getElementById("score");
+var comboElement = document.getElementById("combo");
+
 function beatHit(){
 	console.log("Hit");
 	console.log("HP="+player.performance.hp+" Combo="+player.performance.combo);
@@ -63,6 +66,10 @@ function beatHit(){
 	player.performance.combo++;
 	if(player.performance.maxCombo<player.performance.combo)
 		player.performance.maxCombo=player.performance.combo;
+    scoreText = "SCORE: " + player.performance.hp.toString(10);
+    scoreElement.innerHTML = scoreText;
+    comboText = "COMBO: " + player.performance.combo.toString(10);
+    comboElement.innerHTML = comboText;
 }
 
 function judgeSlide(time,prX,prY){
