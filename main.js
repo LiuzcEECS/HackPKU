@@ -23,6 +23,14 @@ function startGame(mapID) {
             musicdir="src/03/Taketori Hishou.mp3";
             init("03/Dark PHOENiX - Taketori Hishou (KanbeKotori) [Extra].osu");
             break;
+        case 4:
+            musicdir="src/04/nekoneko.mp3";
+            init("04/Nekomura Iroha - Neko Neko Super Fever Night (Suzully) [banvi's Hard].osu");
+            break;
+        case 5:
+            musicdir="src/05/cutverserenadeoflove.mp3";
+            init("05/Hotaru - Serenade of Love (- t e n n y a -) [Normal].osu");
+            break;
     }
 }
 
@@ -64,6 +72,12 @@ function showWelcomePage(score,combo){
     $("#title").fadeIn(1000);
     $("#infop").fadeIn(1000);
     $("#link").fadeIn(1000);
+    player.performance={
+        score:0,
+        combo:0,
+        maxCombo:0,
+        hp:0
+    };
     startwithBG('src/defaultBG.jpg');
     ShowInfo("Score:&nbsp;"+score+"<br/>MaxCombo:&nbsp;"+combo);
 }

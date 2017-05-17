@@ -38,8 +38,8 @@ function resize(){
 	$("#game").attr({"width":canvasW,"height":canvasH});
 	$("#wave").attr({"width":canvasW,"height":canvasH});
 	beginRadius = canvasW/6;
-	defaultRadius = canvasW/22;
-	judgeSlideRadius = defaultRadius*2.5;
+	defaultRadius = canvasW/18;
+	judgeSlideRadius = defaultRadius*2.8;
 }
 
 function getBeatmap(filename){
